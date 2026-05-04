@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Briefing para Criação de Site — No Limits Marketing Estratégico</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --red: #E10A17; --red-dark: #b50812;
+    --black: #0f0f0f; --white: #ffffff;
+    --gray-100: #f5f5f3; --gray-200: #e8e8e5;
+    --gray-400: #a0a09a; --gray-600: #5c5c58; --gray-900: #1a1a18;
+    --radius: 10px; --radius-lg: 16px;
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Poppins', sans-serif; background: var(--gray-100); color: var(--black); min-height: 100vh; padding-bottom: 90px; }
+
+  /* HEADER */
+  .site-header { background: var(--black); position: sticky; top: 0; z-index: 100; border-bottom: 2px solid var(--red); }
+  .header-inner { max-width: 860px; margin: 0 auto; padding: 14px 24px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+  .logo-area { display: flex; align-items: center; gap: 12px; }
+  .logo-icon { width: 38px; height: 38px; background: var(--red); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .logo-text strong { display: block; font-size: 14px; font-weight: 900; color: var(--white); letter-spacing: 0.5px; }
+  .logo-text span { font-size: 10px; color: var(--gray-400); letter-spacing: 1.5px; text-transform: uppercase; font-weight: 300; }
+  .header-badge { font-size: 11px; background: rgba(225,10,23,0.15); color: var(--red); border: 1px solid rgba(225,10,23,0.3); padding: 5px 12px; border-radius: 20px; white-space: nowrap; }
+
+  /* HERO */
+  .hero { background: var(--black); padding: 48px 24px 40px; text-align: center; }
+  .hero-tag { display: inline-block; font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--red); font-weight: 600; margin-bottom: 14px; }
+  .hero h1 { font-size: clamp(24px, 5vw, 38px); font-weight: 900; color: var(--white); line-height: 1.1; margin-bottom: 14px; letter-spacing: -0.5px; }
+  .hero h1 span { color: var(--red); }
+  .hero p { font-size: 13px; color: var(--gray-400); max-width: 500px; margin: 0 auto 24px; line-height: 1.8; font-weight: 300; }
+  .hero-steps { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; }
+  .step-pill { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); color: var(--gray-400); font-size: 11px; padding: 5px 12px; border-radius: 20px; display: flex; align-items: center; gap: 6px; }
+  .step-pill .dot { width: 5px; height: 5px; border-radius: 50%; background: var(--red); flex-shrink: 0; }
+
+  /* PROGRESS */
+  .progress-wrap { background: var(--black); padding: 0 24px 20px; }
+  .progress-track { max-width: 860px; margin: 0 auto; }
+  .progress-bar-outer { height: 3px; background: rgba(255,255,255,0.08); border-radius: 2px; overflow: hidden; margin-bottom: 10px; }
+  .progress-bar-fill { height: 100%; background: var(--red); border-radius: 2px; transition: width 0.5s ease; width: 16.66%; }
+  .progress-labels { display: flex; justify-content: space-between; }
+  .prog-label { font-size: 10px; color: rgba(255,255,255,0.25); transition: color 0.3s; cursor: pointer; padding: 2px 4px; border-radius: 4px; }
+  .prog-label.active { color: var(--red); font-weight: 600; }
+  .prog-label.done { color: rgba(255,255,255,0.45); }
+
+  /* MAIN */
+  .main { max-width: 860px; margin: 0 auto; padding: 32px 24px 0; }
+  .form-section { display: none; }
+  .form-section.active { display: block; }
+
+  /* SECTION HEADER */
+  .section-header { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 24px; }
+  .section-num { width: 46px; height: 46px; background: var(--red); color: var(--white); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 17px; font-weight: 900; flex-shrink: 0; }
+  .section-title h2 { font-size: 19px; font-weight: 700; color: var(--black); margin-bottom: 3px; }
+  .section-title p { font-size: 13px; color: var(--gray-400); line-height: 1.6; }
+
+  /* CARDS */
+  .card { background: var(--white); border: 1px solid var(--gray-200); border-radius: var(--radius-lg); padding: 26px; margin-bottom: 16px; }
+  .card-title { font-size: 12px; font-weight: 600; color: var(--gray-600); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid var(--gray-200); }
+
+  /* FIELDS */
+  .field { margin-bottom: 16px; }
+  .field:last-child { margin-bottom: 0; }
+  .field label { display: block; font-size: 13px; font-weight: 500; color: var(--gray-900); margin-bottom: 6px; }
+  .field label .hint { font-size: 11px; color: var(--gray-400); font-weight: 400; margin-left: 6px; }
+  .field input[type=text], .field input[type=email], .field input[type=tel], .field input[type=url], .field textarea, .field select {
+    width: 100%; padding: 10px 13px; font-size: 14px; font-family: 'Poppins', sans-serif;
+    color: var(--black); background: var(--gray-100); border: 1.5px solid var(--gray-200);
+    border-radius: var(--radius); transition: border-color 0.2s, background 0.2s; outline: none; resize: vertical; appearance: none; -webkit-appearance: none;
+  }
+  .field input:focus, .field textarea:focus, .field select:focus { border-color: var(--red); background: var(--white); }
+  .field textarea { min-height: 88px; line-height: 1.7; }
+  .field select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23a0a09a' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 13px center; padding-right: 34px; cursor: pointer; }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  @media (max-width: 560px) { .two-col { grid-template-columns: 1fr; } }
+
+  /* CHECKBOXES */
+  .check-group { display: grid; grid-template-columns: repeat(auto-fill, minmax(195px, 1fr)); gap: 8px; margin-top: 4px; }
+  .check-item { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border: 1.5px solid var(--gray-200); border-radius: var(--radius); cursor: pointer; transition: all 0.15s; user-select: none; background: var(--gray-100); }
+  .check-item:hover { border-color: var(--gray-400); background: var(--white); }
+  .check-item.selected { border-color: var(--red); background: rgba(225,10,23,0.04); }
+  .check-item input[type=checkbox] { display: none; }
+  .check-box { width: 16px; height: 16px; border: 1.5px solid var(--gray-400); border-radius: 4px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; transition: all 0.15s; }
+  .check-item.selected .check-box { background: var(--red); border-color: var(--red); }
+  .check-item.selected .check-box::after { content: ''; width: 8px; height: 5px; border-left: 2px solid #fff; border-bottom: 2px solid #fff; transform: rotate(-45deg) translateY(-1px); display: block; }
+  .check-label { font-size: 13px; color: var(--black); line-height: 1.3; }
+  .check-item.selected .check-label { color: var(--red); font-weight: 500; }
+
+  /* TIP */
+  .tip { margin-top: 18px; padding: 12px 16px; background: rgba(225,10,23,0.04); border-left: 3px solid var(--red); border-radius: 0 var(--radius) var(--radius) 0; font-size: 12px; color: var(--gray-600); line-height: 1.7; }
+  .tip strong { color: var(--red); font-weight: 600; }
+
+  /* NAV BAR */
+  .nav-bar { position: fixed; bottom: 0; left: 0; right: 0; background: var(--white); border-top: 1px solid var(--gray-200); padding: 13px 24px; z-index: 99; }
+  .nav-inner { max-width: 860px; margin: 0 auto; display: flex; gap: 12px; align-items: center; justify-content: space-between; }
+  .btn-back { padding: 11px 18px; border: 1.5px solid var(--gray-200); border-radius: var(--radius); background: var(--white); color: var(--gray-600); font-family: 'Poppins', sans-serif; font-size: 13px; font-weight: 500; cursor: pointer; transition: all 0.2s; white-space: nowrap; }
+  .btn-back:hover { border-color: var(--gray-400); color: var(--black); }
+  .btn-next { flex: 1; max-width: 250px; padding: 12px 20px; border: none; border-radius: var(--radius); background: var(--red); color: var(--white); font-family: 'Poppins', sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+  .btn-next:hover { background: var(--red-dark); }
+  .btn-next:active { transform: scale(0.98); }
+  .step-counter { font-size: 12px; color: var(--gray-400); white-space: nowrap; }
+
+  /* REVIEW */
+  .review-hero { background: var(--black); border-radius: var(--radius-lg); padding: 30px; text-align: center; margin-bottom: 20px; }
+  .review-hero .check-circle { width: 60px; height: 60px; background: var(--red); border-radius: 50%; margin: 0 auto 14px; display: flex; align-items: center; justify-content: center; }
+  .review-hero h2 { font-size: 21px; font-weight: 700; color: var(--white); margin-bottom: 6px; }
+  .review-hero p { font-size: 13px; color: var(--gray-400); }
+  .review-section { margin-bottom: 18px; }
+  .review-section-title { font-size: 11px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--red); margin-bottom: 8px; padding-left: 2px; }
+  .review-grid { background: var(--white); border: 1px solid var(--gray-200); border-radius: var(--radius-lg); overflow: hidden; }
+  .review-row { display: grid; grid-template-columns: 36% 64%; border-bottom: 1px solid var(--gray-200); }
+  .review-row:last-child { border-bottom: none; }
+  .review-key { padding: 10px 14px; font-size: 12px; color: var(--gray-400); font-weight: 500; background: var(--gray-100); border-right: 1px solid var(--gray-200); display: flex; align-items: flex-start; }
+  .review-val { padding: 10px 14px; font-size: 13px; color: var(--black); word-break: break-word; white-space: pre-wrap; line-height: 1.6; }
+  .tag { display: inline-block; background: rgba(225,10,23,0.07); color: var(--red); font-size: 11px; font-weight: 500; padding: 3px 8px; border-radius: 20px; margin: 2px 2px 2px 0; }
+
+  /* ACTION BUTTONS */
+  .action-buttons { display: flex; flex-direction: column; gap: 10px; margin-top: 4px; }
+  .btn-print { width: 100%; padding: 14px; border: none; border-radius: var(--radius); background: var(--black); color: var(--white); font-family: 'Poppins', sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; transition: background 0.2s; }
+  .btn-print:hover { background: #222; }
+  .btn-restart { width: 100%; padding: 12px; border: 1.5px solid var(--gray-200); border-radius: var(--radius); background: transparent; color: var(--gray-600); font-family: 'Poppins', sans-serif; font-size: 13px; font-weight: 500; cursor: pointer; transition: all 0.2s; }
+  .btn-restart:hover { border-color: var(--red); color: var(--red); }
+  .btn-whatsapp {
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 10px;
+    border: none;
+    border-radius: var(--radius);
+    background: #25D366;
+    color: var(--white);
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-bottom: 10px;
+    letter-spacing: 0.3px;
+    transition: background 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+  .btn-whatsapp:hover { background: #1da851; }
+
+  .footer-credit { text-align: center; font-size: 11px; color: var(--gray-400); margin-top: 28px; padding-bottom: 100px; }
+  .footer-credit strong { color: var(--red); }
+
+  @media print {
+    .site-header, .progress-wrap, .nav-bar, .action-buttons, .footer-credit { display: none !important; }
+    body { background: white; padding: 0; }
+    .main { padding: 0; max-width: 100%; }
+    .form-section { display: block !important; }
+    .card { break-inside: avoid; page-break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <div class="logo-area">
+      <div class="logo-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+          <circle cx="12" cy="12" r="10" fill="white" fill-opacity="0.15"/>
+          <path d="M7 16l3-4 2 2 3-5" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M15 9l2 0 0 2" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="logo-text">
+        <strong>NO LIMITS</strong>
+        <span>Marketing Estratégico</span>
+      </div>
+    </div>
+    <div class="header-badge">Briefing · Site + SEO + GEO</div>
+  </div>
+</header>
+
+<div class="progress-wrap">
+  <div class="progress-track">
+    <div class="progress-bar-outer"><div class="progress-bar-fill" id="progressFill"></div></div>
+    <div class="progress-labels">
+      <span class="prog-label active" onclick="jumpTo(0)">Empresa</span>
+      <span class="prog-label" onclick="jumpTo(1)">Negócio</span>
+      <span class="prog-label" onclick="jumpTo(2)">Site</span>
+      <span class="prog-label" onclick="jumpTo(3)">SEO & GEO</span>
+      <span class="prog-label" onclick="jumpTo(4)">Conteúdo</span>
+      <span class="prog-label" onclick="jumpTo(5)">Referências</span>
+    </div>
+  </div>
+</div>
+
+<div class="hero">
+  <div class="hero-tag">Novo Cliente · Desenvolvimento de Site</div>
+  <h1>Briefing para Criação<br>do seu <span>Site Profissional</span></h1>
+  <p>Preencha as informações com calma. Quanto mais detalhes você fornecer, mais estratégico e eficaz será o resultado.</p>
+  <div class="hero-steps">
+    <div class="step-pill"><div class="dot"></div>SEO Local</div>
+    <div class="step-pill"><div class="dot"></div>GEO para IAs</div>
+    <div class="step-pill"><div class="dot"></div>Design personalizado</div>
+    <div class="step-pill"><div class="dot"></div>Conteúdo otimizado</div>
+  </div>
+</div>
+
+<div class="main">
+
+<!-- S1: EMPRESA -->
+<div class="form-section active" id="sec0">
+  <div class="section-header">
+    <div class="section-num">1</div>
+    <div class="section-title">
+      <h2>Dados da Empresa</h2>
+      <p>Informações básicas para identificação e otimização de SEO Local no Google.</p>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">Identificação</div>
+    <div class="two-col">
+      <div class="field"><label>Nome da empresa</label><input type="text" id="nomeEmpresa" placeholder="Ex: Clínica Bella Vita"></div>
+      <div class="field"><label>Segmento / Nicho</label><input type="text" id="segmento" placeholder="Ex: Clínica Estética, Pet Shop..."></div>
+    </div>
+    <div class="two-col">
+      <div class="field"><label>CNPJ <span class="hint">(opcional)</span></label><input type="text" id="cnpj" placeholder="00.000.000/0001-00"></div>
+      <div class="field"><label>Nome do responsável</label><input type="text" id="responsavel" placeholder="Nome completo"></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">Contato</div>
+    <div class="two-col">
+      <div class="field"><label>WhatsApp / Telefone</label><input type="tel" id="telefone" placeholder="(32) 99999-9999"></div>
+      <div class="field"><label>E-mail de contato</label><input type="email" id="email" placeholder="contato@empresa.com.br"></div>
+    </div>
+    <div class="field"><label>Endereço completo <span class="hint">(importante para SEO Local)</span></label><input type="text" id="endereco" placeholder="Rua, número, bairro, cidade, estado, CEP"></div>
+    <div class="two-col">
+      <div class="field"><label>Cidades de atuação</label><input type="text" id="cidade" placeholder="Ex: Ubá, Visconde do Rio Branco"></div>
+      <div class="field"><label>Horário de funcionamento</label><input type="text" id="horario" placeholder="Seg-Sex 8h-18h / Sáb 8h-12h"></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">Presença Digital Atual</div>
+    <div class="two-col">
+      <div class="field"><label>Possui Google Meu Negócio?</label>
+        <select id="gmb"><option value="">Selecione...</option><option>Sim — já verificado e ativo</option><option>Sim — mas não verificado</option><option>Não possuo</option><option>Não sei o que é</option></select>
+      </div>
+      <div class="field"><label>Possui site atualmente?</label>
+        <select id="temSite"><option value="">Selecione...</option><option>Sim — site próprio ativo</option><option>Sim — mas desatualizado</option><option>Não possuo</option></select>
+      </div>
+    </div>
+    <div class="field"><label>URL do site atual <span class="hint">(se tiver)</span></label><input type="url" id="siteAtual" placeholder="https://www.meusite.com.br"></div>
+    <div class="two-col">
+      <div class="field"><label>Instagram</label><input type="text" id="instagram" placeholder="@perfil"></div>
+      <div class="field"><label>Outras redes sociais</label><input type="text" id="redesSociais" placeholder="Facebook, LinkedIn, TikTok..."></div>
+    </div>
+    <div class="tip"><strong>Por que pedimos isso?</strong> Essas informações garantem consistência entre todas as plataformas — fator essencial para o SEO Local e para ser citado pelas IAs.</div>
+  </div>
+</div>
+
+<!-- S2: NEGÓCIO -->
+<div class="form-section" id="sec1">
+  <div class="section-header">
+    <div class="section-num">2</div>
+    <div class="section-title">
+      <h2>Sobre o Negócio</h2>
+      <p>Essas informações formam a base do conteúdo do site e da estratégia de GEO.</p>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">O que você faz</div>
+    <div class="field"><label>Descreva sua empresa com suas próprias palavras</label>
+      <textarea id="descricao" placeholder="Ex: Somos uma clínica estética especializada em tratamentos faciais e corporais, atendendo mulheres entre 25 e 50 anos em Ubá/MG..."></textarea>
+    </div>
+    <div class="field"><label>Liste seus principais serviços ou produtos <span class="hint">(um por linha)</span></label>
+      <textarea id="servicos" placeholder="Ex:&#10;— Limpeza de pele profunda&#10;— Harmonização facial / Botox&#10;— Drenagem linfática&#10;— Microagulhamento"></textarea>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">Público e posicionamento</div>
+    <div class="field"><label>Quem é seu cliente ideal?</label>
+      <textarea id="publicoAlvo" placeholder="Ex: Mulheres de 28 a 55 anos, classe B/C, moradoras de Ubá e região. Buscam autoestima, rejuvenescimento e bem-estar..."></textarea>
+    </div>
+    <div class="field"><label>Por que o cliente deve escolher você e não o concorrente?</label>
+      <textarea id="diferenciais" placeholder="Ex: Somos o único estúdio em Ubá com equipamento importado da Itália. Nossa profissional é certificada pelo Instituto Y..."></textarea>
+    </div>
+    <div class="field"><label>Principais concorrentes na sua cidade</label>
+      <input type="text" id="concorrentes" placeholder="Ex: Clínica X, Salão Y, Studio Z">
+    </div>
+    <div class="field"><label>Ticket médio dos seus serviços</label>
+      <input type="text" id="ticket" placeholder="Ex: R$ 150 a R$ 800 por sessão">
+    </div>
+    <div class="tip"><strong>Para o GEO:</strong> Quanto mais específico você for sobre o que faz e para quem, mais fácil é para o ChatGPT, Gemini e Perplexity te citarem como referência.</div>
+  </div>
+</div>
+
+<!-- S3: SITE -->
+<div class="form-section" id="sec2">
+  <div class="section-header">
+    <div class="section-num">3</div>
+    <div class="section-title">
+      <h2>Estrutura do Site</h2>
+      <p>Quais páginas você deseja ter no seu site.</p>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">Domínio</div>
+    <div class="two-col">
+      <div class="field"><label>Possui domínio registrado?</label>
+        <select id="dominio"><option value="">Selecione...</option><option>Sim — já tenho o domínio</option><option>Não — quero sugestão</option><option>Não sei o que é domínio</option></select>
+      </div>
+      <div class="field"><label>Domínio desejado ou atual</label><input type="text" id="dominioNome" placeholder="Ex: clinicabellavita.com.br"></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">Páginas desejadas</div>
+    <div class="field">
+      <label>Quais páginas você quer no site?</label>
+      <div class="check-group" id="paginasGroup"></div>
+    </div>
+    <div class="field" style="margin-top:16px"><label>Outras páginas que deseja</label>
+      <input type="text" id="paginasOutras" placeholder="Ex: Área de membros, agendamento online integrado, loja...">
+    </div>
+    <div class="tip"><strong>Dica:</strong> Um site bem estruturado é rastreado com mais eficiência pelo Google e pelas IAs, melhorando tanto o SEO quanto o GEO.</div>
+  </div>
+</div>
+
+<!-- S4: SEO & GEO -->
+<div class="form-section" id="sec3">
+  <div class="section-header">
+    <div class="section-num">4</div>
+    <div class="section-title">
+      <h2>SEO Local & GEO</h2>
+      <p>Informações para posicionamento no Google e nas inteligências artificiais.</p>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">SEO Local — Google</div>
+    <div class="field"><label>Quais cidades ou regiões quer atingir?</label>
+      <input type="text" id="cidadesAlvo" placeholder="Ex: Ubá, Visconde do Rio Branco, Muriaé, Juiz de Fora">
+    </div>
+    <div class="field"><label>Como seu cliente te busca? Quais termos ele usa no Google?</label>
+      <textarea id="palavrasChave" placeholder="Ex:&#10;— clínica estética em Ubá&#10;— botox em Ubá MG&#10;— tratamento facial próximo a mim&#10;— drenagem linfática Ubá"></textarea>
+    </div>
+    <div class="two-col">
+      <div class="field"><label>Avaliações no Google</label><input type="text" id="avaliacoes" placeholder="Ex: 47 avaliações — nota 4.9"></div>
+      <div class="field"><label>Possui depoimentos de clientes?</label>
+        <select id="depoimentos"><option value="">Selecione...</option><option>Sim — textos/vídeos prontos</option><option>Sim — preciso coletar</option><option>Não tenho ainda</option></select>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">GEO — Otimização para Inteligências Artificiais</div>
+    <div class="field"><label>Já pesquisou seu negócio no ChatGPT ou Gemini?</label>
+      <select id="iaCitado"><option value="">Selecione...</option><option>Sim — apareço bem</option><option>Sim — apareço pouco ou incorretamente</option><option>Sim — não apareço nada</option><option>Nunca pesquisei</option></select>
+    </div>
+    <div class="field"><label>O que você quer que o ChatGPT e o Gemini digam sobre você?</label>
+      <textarea id="mensagemIA" placeholder="Ex: Quero ser citado como o melhor profissional de harmonização facial em Ubá. Que quando alguém perguntar 'melhor clínica de botox em Ubá MG', meu nome apareça..."></textarea>
+    </div>
+    <div class="field"><label>Sua empresa possui certificados, prêmios ou reconhecimentos?</label>
+      <textarea id="premios" placeholder="Ex: Certificação pela Sociedade Brasileira de Dermatologia, 10 anos de mercado, membro da Associação Y..."></textarea>
+    </div>
+    <div class="tip"><strong>Como funciona o GEO:</strong> Estruturamos seu conteúdo com Schema Markup e linguagem de entidade para que o ChatGPT, Gemini e Perplexity te reconheçam como referência na sua área e cidade.</div>
+  </div>
+</div>
+
+<!-- S5: CONTEÚDO -->
+<div class="form-section" id="sec4">
+  <div class="section-header">
+    <div class="section-num">5</div>
+    <div class="section-title">
+      <h2>Conteúdo & Identidade Visual</h2>
+      <p>Materiais que você já tem e o estilo visual da sua marca.</p>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">Identidade visual</div>
+    <div class="field"><label>Possui logotipo?</label>
+      <select id="logo"><option value="">Selecione...</option><option>Sim — arquivo em alta qualidade (AI, EPS, SVG ou PNG)</option><option>Sim — mas só tenho imagem de baixa qualidade</option><option>Não tenho — preciso criar</option></select>
+    </div>
+    <div class="two-col">
+      <div class="field"><label>Cores da marca</label><input type="text" id="cores" placeholder="Ex: vermelho + preto + branco"></div>
+      <div class="field"><label>Fontes / tipografia</label><input type="text" id="fontes" placeholder="Ex: Poppins, Playfair Display..."></div>
+    </div>
+    <div class="field"><label>Tom de voz da marca</label>
+      <div class="check-group" id="tomGroup"></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">Materiais disponíveis</div>
+    <div class="two-col">
+      <div class="field"><label>Possui fotos profissionais?</label>
+        <select id="fotos"><option value="">Selecione...</option><option>Sim — fotos profissionais em alta resolução</option><option>Tenho fotos, mas não são profissionais</option><option>Não tenho — precisarei de banco de imagens</option><option>Vou contratar fotógrafo</option></select>
+      </div>
+    </div>
+    <div class="field"><label>Possui textos redigidos?</label>
+      <select id="textos"><option value="">Selecione...</option><option>Sim — prontos para revisão</option><option>Tenho rascunhos e ideias</option><option>Não — a No Limits vai criar tudo</option></select>
+    </div>
+    <div class="field"><label>História ou diferencial que queira contar no site</label>
+      <textarea id="historia" placeholder="Ex: Abri minha clínica depois de 15 anos como técnica em estética. Sempre sonhei em ter um espaço que fizesse as pessoas se sentirem únicas..."></textarea>
+    </div>
+  </div>
+</div>
+
+<!-- S6: REFERÊNCIAS -->
+<div class="form-section" id="sec5">
+  <div class="section-header">
+    <div class="section-num">6</div>
+    <div class="section-title">
+      <h2>Referências & Expectativas</h2>
+      <p>O que você admira, o que não quer e o que espera alcançar com o site.</p>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">Referências de design</div>
+    <div class="field"><label>Sites que você admira <span class="hint">(com o que gosta em cada um)</span></label>
+      <textarea id="referencias" placeholder="Ex:&#10;— www.clinicaexemplo.com.br — gosto do design clean e organização do menu&#10;— www.outrosite.com — gosto das fotos grandes e do botão de WhatsApp fixo"></textarea>
+    </div>
+    <div class="field"><label>O que você NÃO quer no seu site?</label>
+      <textarea id="naoQuer" placeholder="Ex: Não quero cores muito escuras, sem animações excessivas, nada muito informal..."></textarea>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">Objetivo e prazo</div>
+    <div class="field"><label>Qual o principal objetivo do site?</label>
+      <div class="check-group" id="objetivoGroup"></div>
+    </div>
+    <div class="two-col" style="margin-top:18px">
+      <div class="field"><label>Prazo desejado para entrega</label>
+        <select id="prazo"><option value="">Selecione...</option><option>Urgente — o mais rápido possível</option><option>Até 15 dias</option><option>Entre 15 e 30 dias</option><option>Entre 30 e 60 dias</option><option>Sem prazo definido</option></select>
+      </div>
+      <div class="field"><label>Investimento planejado</label>
+        <select id="budget"><option value="">Selecione...</option><option>Até R$ 1.500</option><option>R$ 1.500 a R$ 3.000</option><option>R$ 3.000 a R$ 5.000</option><option>R$ 5.000 a R$ 10.000</option><option>Acima de R$ 10.000</option><option>Prefiro não informar</option></select>
+      </div>
+    </div>
+    <div class="field"><label>Observações finais, dúvidas ou pedidos especiais</label>
+      <textarea id="observacoes" placeholder="Qualquer informação adicional que considere importante para o projeto..."></textarea>
+    </div>
+    <div class="tip">Após o envio, nossa equipe entrará em contato em até <strong>1 dia útil</strong> para agendar a apresentação da estratégia. Obrigada por confiar na No Limits!</div>
+  </div>
+</div>
+
+<!-- RESUMO FINAL -->
+<div class="form-section" id="sec6">
+  <div class="review-hero">
+    <div class="check-circle">
+      <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
+        <path d="M5 13l6 6 10-12" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <h2>Briefing concluído!</h2>
+    <p>Envie pelo WhatsApp ou imprima para seus registros.</p>
+  </div>
+  <div id="reviewContent"></div>
+  <div class="action-buttons">
+    <button class="btn-whatsapp" onclick="sendWhatsApp()">Enviar pelo WhatsApp</button>
+  <button class="btn-print" onclick="window.print()">Imprimir / Salvar como PDF</button>
+    <button class="btn-restart" onclick="restart()">Preencher novo briefing</button>
+  </div>
+</div>
+
+<p class="footer-credit">Desenvolvido por <strong>No Limits Marketing Estratégico</strong> · nolimitsmkt.com.br</p>
+</div>
+
+<div class="nav-bar">
+  <div class="nav-inner">
+    <button class="btn-back" id="btnBack" onclick="prev()" style="visibility:hidden">← Voltar</button>
+    <span class="step-counter" id="stepCounter">Etapa 1 de 6</span>
+    <button class="btn-next" id="btnNext" onclick="next()">Próximo →</button>
+  </div>
+</div>
+
+<script>
+// ── NÚMERO DE WHATSAPP DA NO LIMITS (alterar aqui) ──
+const WA_NUMBER = '5532933003783';
+
+const paginasOpts = ['Home / Página inicial','Sobre a empresa','Serviços ou Produtos','Blog / Artigos','Depoimentos de clientes','Contato','Perguntas frequentes (FAQ)','Como chegar / Localização','Página de agendamento'];
+const tomOpts = ['Profissional e formal','Acolhedor e humanizado','Moderno e tecnológico','Descontraído e próximo','Sofisticado e premium','Educativo e informativo'];
+const objetivoOpts = ['Gerar leads e contatos','Vender online (e-commerce)','Agendar consultas ou serviços','Fortalecer marca e autoridade','Aparecer no Google e nas IAs','Substituir as redes sociais como portfólio'];
+
+function buildChecks(containerId, opts) {
+  const el = document.getElementById(containerId);
+  if (!el || el.children.length > 0) return;
+  opts.forEach(o => {
+    const label = document.createElement('label');
+    label.className = 'check-item';
+    label.innerHTML = `<input type="checkbox" value="${o}"><div class="check-box"></div><span class="check-label">${o}</span>`;
+    label.querySelector('input').addEventListener('change', e => label.classList.toggle('selected', e.target.checked));
+    el.appendChild(label);
+  });
+}
+buildChecks('paginasGroup', paginasOpts);
+buildChecks('tomGroup', tomOpts);
+buildChecks('objetivoGroup', objetivoOpts);
+
+let current = 0;
+const total = 6;
+
+function goTo(n) {
+  document.getElementById('sec' + current).classList.remove('active');
+  current = n;
+  document.getElementById('sec' + current).classList.add('active');
+  updateUI();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+function next() {
+  if (current === total - 1) { buildReview(); goTo(total); return; }
+  if (current < total) goTo(current + 1);
+}
+function prev() { if (current > 0) goTo(current - 1); }
+function jumpTo(n) { if (n <= current) goTo(n); }
+function restart() { goTo(0); }
+
+function updateUI() {
+  const isReview = current === total;
+  document.getElementById('btnBack').style.visibility = (current > 0 && !isReview) ? 'visible' : 'hidden';
+  document.getElementById('btnNext').style.display = isReview ? 'none' : 'block';
+  document.getElementById('btnBack').style.display = isReview ? 'none' : 'block';
+  document.getElementById('stepCounter').textContent = isReview ? 'Concluído!' : `Etapa ${current + 1} de ${total}`;
+  document.getElementById('btnNext').textContent = current === total - 1 ? 'Concluir e Ver Resumo ✓' : 'Próximo →';
+  const pct = isReview ? 100 : ((current / total) * 100) + 16.66;
+  document.getElementById('progressFill').style.width = Math.min(pct, 100) + '%';
+  document.querySelectorAll('.prog-label').forEach((l, i) => {
+    l.classList.remove('active', 'done');
+    if (i === current) l.classList.add('active');
+    else if (i < current) l.classList.add('done');
+  });
+}
+
+function val(id) { const el = document.getElementById(id); return el ? el.value.trim() : ''; }
+function checks(id) {
+  const el = document.getElementById(id);
+  return el ? [...el.querySelectorAll('input:checked')].map(i => i.value) : [];
+}
+
+function collectData() {
+  return {
+    'Nome da empresa': val('nomeEmpresa'), 'Segmento': val('segmento'),
+    'Responsável': val('responsavel'), 'CNPJ': val('cnpj'),
+    'WhatsApp': val('telefone'), 'E-mail': val('email'),
+    'Endereço': val('endereco'), 'Cidades': val('cidade'), 'Horário': val('horario'),
+    'Google Meu Negócio': val('gmb'), 'Site atual': val('siteAtual'),
+    'Instagram': val('instagram'), 'Outras redes': val('redesSociais'),
+    'Descrição': val('descricao'), 'Serviços/Produtos': val('servicos'),
+    'Público-alvo': val('publicoAlvo'), 'Diferenciais': val('diferenciais'),
+    'Concorrentes': val('concorrentes'), 'Ticket médio': val('ticket'),
+    'Domínio': val('dominio'), 'Nome do domínio': val('dominioNome'),
+    'Páginas desejadas': checks('paginasGroup').join(', '),
+    'Outras páginas': val('paginasOutras'),
+    'Cidades-alvo SEO': val('cidadesAlvo'), 'Palavras-chave': val('palavrasChave'),
+    'Avaliações Google': val('avaliacoes'), 'Depoimentos': val('depoimentos'),
+    'Citado por IAs': val('iaCitado'), 'Mensagem para IAs': val('mensagemIA'),
+    'Certificados/Prêmios': val('premios'),
+    'Logotipo': val('logo'), 'Cores da marca': val('cores'), 'Fontes': val('fontes'),
+    'Tom de voz': checks('tomGroup').join(', '),
+    'Fotos': val('fotos'), 'Textos': val('textos'),
+    'História': val('historia'),
+    'Sites de referência': val('referencias'), 'O que não quer': val('naoQuer'),
+    'Objetivo do site': checks('objetivoGroup').join(', '),
+    'Prazo': val('prazo'), 'Investimento': val('budget'), 'Observações': val('observacoes')
+  };
+}
+
+function buildReview() {
+  const sections = [
+    { title: 'Dados da Empresa', keys: ['Nome da empresa','Segmento','Responsável','CNPJ','WhatsApp','E-mail','Endereço','Cidades','Horário','Google Meu Negócio','Site atual','Instagram','Outras redes'] },
+    { title: 'Sobre o Negócio', keys: ['Descrição','Serviços/Produtos','Público-alvo','Diferenciais','Concorrentes','Ticket médio'] },
+    { title: 'Estrutura do Site', keys: ['Domínio','Nome do domínio','Páginas desejadas','Outras páginas'] },
+    { title: 'SEO Local & GEO', keys: ['Cidades-alvo SEO','Palavras-chave','Avaliações Google','Depoimentos','Citado por IAs','Mensagem para IAs','Certificados/Prêmios'] },
+    { title: 'Conteúdo & Identidade', keys: ['Logotipo','Cores da marca','Fontes','Tom de voz','Fotos','Textos','História'] },
+    { title: 'Referências & Expectativas', keys: ['Sites de referência','O que não quer','Objetivo do site','Prazo','Investimento','Observações'] }
+  ];
+  const data = collectData();
+  let html = '';
+  sections.forEach(s => {
+    const rows = s.keys.filter(k => data[k] && data[k].length > 0);
+    if (!rows.length) return;
+    html += `<div class="review-section"><div class="review-section-title">${s.title}</div><div class="review-grid">`;
+    rows.forEach(k => {
+      html += `<div class="review-row"><div class="review-key">${k}</div><div class="review-val">${data[k].replace(/\n/g,'<br>')}</div></div>`;
+    });
+    html += `</div></div>`;
+  });
+  document.getElementById('reviewContent').innerHTML = html;
+}
+
+
+updateUI();
+
+function sendWhatsApp() {
+  const phone = '5532933003783';
+  const sections = [
+    {
+      title: '🏢 DADOS DA EMPRESA',
+      rows: [
+        ['Empresa', val('nomeEmpresa')],
+        ['Segmento', val('segmento')],
+        ['Responsável', val('responsavel')],
+        ['CNPJ', val('cnpj')],
+        ['WhatsApp', val('telefone')],
+        ['E-mail', val('email')],
+        ['Endereço', val('endereco')],
+        ['Cidades de atuação', val('cidade')],
+        ['Horário', val('horario')],
+        ['Google Meu Negócio', val('gmb')],
+        ['Site atual', val('siteAtual')],
+        ['Instagram', val('instagram')],
+        ['Outras redes', val('redesSociais')],
+      ]
+    },
+    {
+      title: '💼 SOBRE O NEGÓCIO',
+      rows: [
+        ['Descrição', val('descricao')],
+        ['Serviços/Produtos', val('servicos')],
+        ['Público-alvo', val('publicoAlvo')],
+        ['Diferenciais', val('diferenciais')],
+        ['Concorrentes', val('concorrentes')],
+        ['Ticket médio', val('ticket')],
+      ]
+    },
+    {
+      title: '🌐 ESTRUTURA DO SITE',
+      rows: [
+        ['Domínio', val('dominio')],
+        ['Nome do domínio', val('dominioNome')],
+        ['Páginas desejadas', checks('paginasGroup').join(', ')],
+        ['Outras páginas', val('paginasOutras')],
+      ]
+    },
+    {
+      title: '🔍 SEO LOCAL & GEO',
+      rows: [
+        ['Cidades-alvo SEO', val('cidadesAlvo')],
+        ['Palavras-chave', val('palavrasChave')],
+        ['Avaliações Google', val('avaliacoes')],
+        ['Depoimentos', val('depoimentos')],
+        ['Citado por IAs?', val('iaCitado')],
+        ['O que quer que as IAs digam', val('mensagemIA')],
+        ['Certificados/Prêmios', val('premios')],
+      ]
+    },
+    {
+      title: '🎨 CONTEÚDO & IDENTIDADE',
+      rows: [
+        ['Logotipo', val('logo')],
+        ['Cores da marca', val('cores')],
+        ['Fontes', val('fontes')],
+        ['Tom de voz', checks('tomGroup').join(', ')],
+        ['Fotos', val('fotos')],
+        ['Textos', val('textos')],
+        ['História', val('historia')],
+      ]
+    },
+    {
+      title: '🎯 REFERÊNCIAS & EXPECTATIVAS',
+      rows: [
+        ['Sites de referência', val('referencias')],
+        ['O que não quer', val('naoQuer')],
+        ['Objetivo do site', checks('objetivoGroup').join(', ')],
+        ['Prazo', val('prazo')],
+        ['Investimento', val('budget')],
+        ['Observações', val('observacoes')],
+      ]
+    }
+  ];
+
+  let msg = '*BRIEFING PARA CRIAÇÃO DE SITE*\n';
+  msg += '*No Limits Marketing Estratégico*\n';
+  msg += '─────────────────────────\n\n';
+
+  sections.forEach(s => {
+    const rows = s.rows.filter(r => r[1] && r[1].length > 0);
+    if (rows.length === 0) return;
+    msg += `*${s.title}*\n`;
+    rows.forEach(r => {
+      msg += `▸ *${r[0]}:* ${r[1]}\n`;
+    });
+    msg += '\n';
+  });
+
+  msg += '─────────────────────────\n';
+  msg += '_Enviado via Briefing No Limits_';
+
+  const encoded = encodeURIComponent(msg);
+  window.open(`https://wa.me/${phone}?text=${encoded}`, '_blank');
+}
+</script>
+</body>
+</html>
